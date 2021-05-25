@@ -52,7 +52,7 @@ Purpose : Sample setup configuration of SystemView with FreeRTOS.
 Revision: $Rev: 7745 $
 */
 #include "FreeRTOS.h"
-#include "SEGGER_SYSVIEW.h"
+#include "SEGGER/SEGGER_SYSVIEW.h"
 
 extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
 
