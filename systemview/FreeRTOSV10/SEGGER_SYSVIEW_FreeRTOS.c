@@ -53,7 +53,7 @@ Revision: $Rev: 7947 $
 */
 #include "SEGGER_SYSVIEW_FreeRTOS.h"
 #include "FreeRTOS.h"
-#include "SEGGER_SYSVIEW.h"
+#include "SEGGER/SEGGER_SYSVIEW.h"
 #include "string.h" // Required for memset
 #include "task.h"
 

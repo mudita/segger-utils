@@ -1,17 +1,21 @@
-target_include_directories(${PROJECT_NAME}
-        PUBLIC
-        "${CMAKE_CURRENT_LIST_DIR}/SEGGER/"
-        "${CMAKE_CURRENT_LIST_DIR}/Config/"
-        "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSV10/"
-        "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSV10/Config/"
-        "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSV10/Patch"
+cmake_minimum_required(VERSION 3.8)
 
-        )
-target_compile_options(${PROJECT_NAME} PUBLIC "-w")
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_LIST_DIR}")
-target_sources(${PROJECT_NAME}
-        PRIVATE
+project(systemview VERSION 1.0)
+
+add_library(systemview)
+add_library(segger::systemview ALIAS systemview)
+
+target_include_directories(systemview
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/>
+)
+
+target_compile_options(systemview PUBLIC "-w")
+target_sources(systemview
+    PRIVATE
         "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSV10/Config/SEGGER_SYSVIEW_Config_FreeRTOS.c"
         "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.c"
         "${CMAKE_CURRENT_LIST_DIR}/SEGGER/SEGGER_SYSVIEW.c"
-        )
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE module-os rtt)
