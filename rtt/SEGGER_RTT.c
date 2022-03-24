@@ -246,6 +246,8 @@ SEGGER_RTT_PUT_CB_SECTION(SEGGER_RTT_CB_ALIGN(SEGGER_RTT_CB _SEGGER_RTT));
 
 SEGGER_RTT_PUT_BUFFER_SECTION(SEGGER_RTT_BUFFER_ALIGN(static char _acUpBuffer[BUFFER_SIZE_UP]));
 SEGGER_RTT_PUT_BUFFER_SECTION(SEGGER_RTT_BUFFER_ALIGN(static char _acDownBuffer[BUFFER_SIZE_DOWN]));
+SEGGER_RTT_PUT_BUFFER_SECTION(SEGGER_RTT_BUFFER_ALIGN(static char _mcUpBuffer[BUFFER_SIZE_UP]));
+SEGGER_RTT_PUT_BUFFER_SECTION(SEGGER_RTT_BUFFER_ALIGN(static char _mcDownBuffer[BUFFER_SIZE_DOWN]));
 
 static unsigned char _ActiveTerminal;
 
@@ -303,6 +305,24 @@ static void _DoInit(void)
     // Copy Id string in three steps to make sure "SEGGER RTT" is not found
     // in initializer memory (usually flash) by J-Link
     //
+    // Initialize up buffer 1
+    //
+    p->aUp[1].sName        = "MC";
+    p->aUp[1].pBuffer      = _mcUpBuffer;
+    p->aUp[1].SizeOfBuffer = sizeof(_mcUpBuffer);
+    p->aUp[1].RdOff        = 0u;
+    p->aUp[1].WrOff        = 0u;
+    p->aUp[1].Flags        = SEGGER_RTT_MODE_DEFAULT;
+    //
+    // Initialize down buffer 1
+    //
+    p->aDown[1].sName        = "MC";
+    p->aDown[1].pBuffer      = _mcDownBuffer;
+    p->aDown[1].SizeOfBuffer = sizeof(_mcDownBuffer);
+    p->aDown[1].RdOff        = 0u;
+    p->aDown[1].WrOff        = 0u;
+    p->aDown[1].Flags        = SEGGER_RTT_MODE_DEFAULT;
+
     STRCPY(&p->acID[7], "RTT", 9);
     STRCPY(&p->acID[0], "SEGGER", 7);
     p->acID[6] = ' ';
